@@ -1,6 +1,6 @@
 # CocoaDVDPlayer
 
-## DESCRIPTION
+## Description
 
 The CocoaDVDPlayer sample project demonstrates how to play DVD-Video media in a Cocoa application using DVD Playback Services, the API for the DVD Playback framework introduced in OS X v10.3. The project builds an application with a full set of controls and a resizable video window that maintains the correct aspect ratio. Other features include bookmarks, multiple viewing angles, and a playback timer. The project also shows how to register for and handle DVD events, and how to implement error-handling.
 
@@ -26,12 +26,12 @@ The CocoaDVDPlayer sample project demonstrates how to play DVD-Video media in a 
 	• Go to Menu button
 
 
-## BUILDING THE APPLICATION
+## Building The Application
 
 If you want to use the Xcode project that comes with the sample, install Xcode 4.4 or later on a system running OS X v10.8 or later. 
 
 
-### USING THE APPLICATION
+### Using The Application
 
 To run this version of CocoaDVDPlayer, you need a system with OS X v10.8 or later, an Apple-supplied DVD drive, and display hardware that supports DVD playback.
 
@@ -56,7 +56,7 @@ Now you're ready to play the DVD media on the disc.
 Note that if you launch CocoaDVDPlayer using the Xcode debugger, the application terminates when it calls the DVDInitialize function to start a playback session. This is a security feature to protect the decryption code in the DVD Playback framework.
 
 
-## CHANGES FROM PREVIOUS VERSIONS
+## Changes From Previous Versions
 
 Version 1.0 - First release.
 
