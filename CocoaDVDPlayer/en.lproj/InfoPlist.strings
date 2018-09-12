@@ -1,4 +1,4 @@
-﻿/* Localized versions of Info.plist keys */
+/* Localized versions of Info.plist keys */
 
 CFBundleName = "CocoaDVDPlayer";
-NSHumanReadableCopyright = "© 2009 Apple, Inc.";
+NSHumanReadableCopyright = "© 2009-2012 Apple, Inc.";
