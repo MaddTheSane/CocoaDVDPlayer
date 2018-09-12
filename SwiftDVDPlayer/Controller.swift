@@ -9,9 +9,9 @@
 import Cocoa
 import DVDPlayback
 
-/// This is a private class that's used to pass DVD playback event information
-/// from the callback function MyDVDEventHandler (which runs in a thread other than
-/// the main thread) to the method handleDVDEvent, which runs in the main thread and
+/// This is a private struct that's used to pass DVD playback event information
+/// from the callback function `MyDVDEventHandler` (which runs in a thread other than
+/// the main thread) to the method `handleDVDEvent`, which runs in the main thread and
 /// actually does the work.
 private struct DVDEvent {
 	var eventCode: DVDEventCode
@@ -20,11 +20,11 @@ private struct DVDEvent {
 }
 
 
-/** This is our DVD event callback function. It's always called in a thread other
-than the main thread. We need to handle the event in the main thread because we
-may want to update the UI, which involves drawing. Therefore we pass the event
-information to the `handleDVDEvent` method, which runs in the main thread and
-actually does the work. */
+/// This is our DVD event callback function. It's always called in a thread other
+/// than the main thread. We need to handle the event in the main thread because we
+/// may want to update the UI, which involves drawing. Therefore we pass the event
+/// information to the `handleDVDEvent` method, which runs in the main thread and
+/// actually does the work.
 private func myDVDEventHandler(eventCode: DVDEventCode, eventData1: DVDEventValue, eventData2: DVDEventValue, inRefCon: UnsafeMutableRawPointer) {
 	let controller = Unmanaged<DVDAppDelegate>.fromOpaque(inRefCon).takeUnretainedValue()
 	let event = DVDEvent(eventCode: eventCode, eventData1: eventData1, eventData2: eventData2)
@@ -301,19 +301,23 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 			})
 			//return DVDRegisterEventCallBack(myDVDEventHandler, &eventCodes, UInt32(eventCodes.count), aRefCon, unsafeBitCast(body, to: UnsafeMutablePointer<DVDEventCallBackRef>.self))
 		}
-		assert(result == noErr, "DVDRegisterEventCallBack returned \(result)");
+		if result != noErr {
+			print("DVDRegisterEventCallBack returned \(result)")
+		}
 		
-		
-		DVDSetFatalErrorCallBack(myDVDErrorHandler, aRefCon)
-		
-		assert (result == noErr, "DVDSetFatalErrorCallBack returned \(result)");
+		result = DVDSetFatalErrorCallBack(myDVDErrorHandler, aRefCon)
+		if result != noErr {
+			print("DVDSetFatalErrorCallBack returned \(result)")
+		}
 		
 		/* Change the period for the recurring kDVDEventTitleTime event to 1000
 		milliseconds. This makes it more likely that the playback time advances at
 		least one second on each update. */
 		
 		result = DVDSetTimeEventRate (1000);
-		assert (result == noErr, "DVDSetTimeEventRate returned \(result)");
+		if result != noErr {
+			print("DVDSetTimeEventRate returned \(result)")
+		}
 	}
 	
 	/** If a playback session is active, this method closes media, unregisters the
@@ -326,7 +330,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 			NSLog("Step 8: End Session");
 			DVDUnregisterEventCallBack(eventCallbackID)
 			let result = DVDDispose()
-			assert (result == noErr, "DVDDispose returned \(result)")
+			if result != noErr {
+				print("DVDDispose returned \(result)")
+			}
 			self.eventCallbackID = nil;
 		}
 	}
@@ -381,8 +387,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	var hasMedia: Bool {
 		var hasIntMedia: DarwinBoolean = false
 		let result = DVDHasMedia(&hasIntMedia)
-		//assert(result == noErr, "DVDHasMedia returned \(result)")
-		_ = result
+		if result != noErr {
+			print("DVDHasMedia returned \(result)")
+		}
 		return hasIntMedia.boolValue
 	}
 	
@@ -396,11 +403,15 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		
 		if volumeURL != nil {
 			let result = DVDCloseMediaVolume()
-			assert(result == noErr, "DVDCloseMediaVolume returned \(result)")
+			if result != noErr {
+				print("DVDCloseMediaVolume returned \(result)")
+			}
 			volumeURL = nil
 		} else {
 			let result = DVDCloseMediaFile()
-			assert(result == noErr, "DVDCloseMediaFile returned \(result)")
+			if result != noErr {
+				print("DVDCloseMediaFile returned \(result)")
+			}
 		}
 		
 		/* clear all information in Controller window */
@@ -443,7 +454,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		beginSession()
 		resetUI()
 		videoWindow.setupVideoWindow()
-		searchMountedDVDDisc()
+		_=searchMountedDVDDisc()
 	}
 	
 	/// Elsewhere in this file, we send ourself the terminate message when an
@@ -486,7 +497,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		
 		if panel.runModal() == NSApplication.ModalResponse.OK {
 			let folderURL = panel.url!
-			openMedia(at: folderURL, isVolume: false)
+			_=openMedia(at: folderURL, isVolume: false)
 		}
 	}
 	
@@ -504,7 +515,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		if dvdState != .playing {
 			NSLog("Step 6: Play");
 			let result = DVDPlay();
-			assert (noErr == result, "DVDPlay returned \(result)");
+			if result != noErr {
+				print("DVDPlay returned \(result)")
+			}
 		}
 	}
 	
@@ -519,8 +532,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		}
 		if dvdState == .paused {
 			let result = DVDPause()
-			assert (result == noErr, "DVDPause returned \(result)");
-			
+			if result != noErr {
+				print("DVDPause returned \(result)")
+			}
 		}
 	}
 	
@@ -538,7 +552,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		}
 		
 		let result = DVDStop()
-		assert(result == noErr, "DVDStop returned \(result)")
+		if result != noErr {
+			print("DVDStop returned \(result)")
+		}
 	}
 	
 	/** This method implements the action for the Eject button in the Control window. */
@@ -558,7 +574,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	@IBAction func onScanForward(_ sender: AnyObject?) {
 		if dvdState == .playing {
 			let result = DVDScan(.rate4x, .forward);
-			assert(result == noErr, "DVDScan returned \(result)");
+			if result != noErr {
+				print("DVDScan returned \(result)")
+			}
 		}
 	}
 	
@@ -567,7 +585,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	@IBAction func onScanBackward(_ sender: AnyObject?) {
 		if dvdState == .playing {
 			let result = DVDScan(.rate4x, .backward);
-			assert(result == noErr, "DVDScan returned \(result)");
+			if result != noErr {
+				print("DVDScan returned \(result)")
+			}
 		}
 	}
 	
@@ -576,7 +596,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	@IBAction func onPreviousScene(_ sender: AnyObject?) {
 		if dvdState == .playing {
 			let result = DVDPreviousChapter()
-			assert (result == noErr, "DVDPreviousChapter returned \(result)");
+			if result != noErr {
+				print("DVDPreviousChapter returned \(result)")
+			}
 		}
 	}
 	
@@ -584,7 +606,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	@IBAction func onNextScene(_ sender: AnyObject?) {
 		if dvdState == .playing {
 			let result = DVDNextChapter()
-			assert (result == noErr, "DVDNextChapter returned \(result)");
+			if result != noErr {
+				print("DVDNextChapter returned \(result)")
+			}
 		}
 	}
 	
@@ -598,14 +622,20 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		var onMenu: DarwinBoolean = false
 		var whichMenu = DVDMenu.none
 		var result = DVDIsOnMenu(&onMenu, &whichMenu)
-		assert(result == noErr, "DVDIsOnMenu returned \(result)")
+		if result != noErr {
+			print("DVDIsOnMenu returned \(result)")
+		}
 		
 		if onMenu.boolValue {
 			result = DVDReturnToTitle();
-			assert (result == noErr, "DVDReturnToTitle returned \(result)");
+			if result != noErr {
+				print("DVDReturnToTitle returned \(result)")
+			}
 		} else {
 			result = DVDGoToMenu(.root);
-			assert (result == noErr, "DVDGoToMenu returned \(result)");
+			if result != noErr {
+				print("DVDGoToMenu returned \(result)")
+			}
 		}
 	}
 	
@@ -622,7 +652,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 				angle = 1;
 			}
 			result = DVDSetAngle(angle);
-			assert (result == noErr, "DVDSetAngle returned \(result)");
+			if result != noErr {
+				print("DVDSetAngle returned \(result)")
+			}
 		}
 	}
 	
@@ -676,14 +708,18 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		var isMuted: DarwinBoolean = false
 		var result = DVDIsMuted(&isMuted)
 		result = DVDMute(!isMuted.boolValue)
-		assert(result == noErr, "DVDMute returned \(result)");
+		if result != noErr {
+			print("DVDMute returned \(result)")
+		}
 	}
 	
 	/// This method implements the action for the audio volume slider control in the
 	/// Control window.
 	@IBAction func onAudioVolume(_ sender: NSSlider?) {
 		let result = DVDSetAudioVolume(UInt16(sender?.floatValue ?? 127))
-		assert (result == noErr, "DVDSetAudioVolume returned \(result)");
+		if result != noErr {
+			print("DVDSetAudioVolume returned \(result)")
+		}
 	}
 	
 	/// This method implements the action for the Show/Hide Controller item in the Window
@@ -751,7 +787,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		default:
 			keyIsHandled = false
 		}
-		assert(result == noErr, "DVDDoUserNavigation returned \(result)");
+		if result != noErr {
+			print("DVDDoUserNavigation returned \(result)")
+		}
 		
 		return keyIsHandled
 	}
