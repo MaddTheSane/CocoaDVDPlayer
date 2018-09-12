@@ -280,7 +280,7 @@ session initialization. */
 
 	OSStatus result = DVDSetVideoWindowID ((UInt32)[self windowNumber]);
 	if (result != noErr) {
-		NSLog(@"DVDSetVideoWindowID returned %ld", result);
+		NSLog(@"DVDSetVideoWindowID returned %d", (int)result);
 	}
 	
 	[self setVideoDisplay];
@@ -309,7 +309,7 @@ launching and the Controller object sends us the setupVideoWindow message, and
 		Boolean isSupported = FALSE;
 		OSStatus result = DVDSwitchToDisplay (newDisplay, &isSupported);
 		if (result != noErr) {
-			NSLog(@"DVDSwitchToDisplay returned %ld", result);
+			NSLog(@"DVDSwitchToDisplay returned %d", (int)result);
 		}
 		if (isSupported) { 
 			curDisplay = newDisplay;
@@ -338,7 +338,7 @@ when the aspect ratio of the title changes. */
 
 	OSStatus result = DVDSetVideoCGBounds ((CGRect *)&bounds);
 	if (result != noErr) {
-		NSLog(@"DVDSetVideoCGBounds returned %ld", result);
+		NSLog(@"DVDSetVideoCGBounds returned %d", (int)result);
 	}
 }
 

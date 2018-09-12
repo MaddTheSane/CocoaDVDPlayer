@@ -236,7 +236,7 @@ by notifying DVD Playback Services. */
 {
 	OSStatus result = DVDSleep();
 	if (result != noErr) {
-		NSLog(@"DVDSleep returned %ld", result);
+		NSLog(@"DVDSleep returned %d", (int)result);
 	}
 }
 
@@ -249,7 +249,7 @@ notifying DVD Playback Services. */
 {
 	OSStatus result = DVDWakeUp();
 	if (result != noErr) {
-		NSLog(@"DVDWakeUp returned %ld", result);
+		NSLog(@"DVDWakeUp returned %d", (int)result);
 	}
 }
 
@@ -315,7 +315,7 @@ range. */
 	UInt16 minLevel, curLevel, maxLevel;
 	OSStatus result = DVDGetAudioVolumeInfo (&minLevel, &curLevel, &maxLevel);
 	if (result != noErr) {
-		NSLog(@"DVDGetAudioVolumeInfo returned %ld", result);
+		NSLog(@"DVDGetAudioVolumeInfo returned %d", (int)result);
 	}
 
 	/* default action is to maintain the current level */
@@ -336,7 +336,7 @@ range. */
 	/* set the new audio level */
 	result = DVDSetAudioVolume (newLevel);
 	if (result != noErr) {
-		NSLog(@"DVDSetAudioVolume returned %ld", result);
+		NSLog(@"DVDSetAudioVolume returned %d", (int)result);
 	}
 
 	/* return the new level, which we use to adjust the audio slider */
@@ -446,14 +446,14 @@ error handlers, and defines the rate at which timer events arrive. */
 		&mEventCallBackID);
 	
 	if (result != noErr) {
-		NSLog(@"DVDRegisterEventCallBack returned %ld", result);
+		NSLog(@"DVDRegisterEventCallBack returned %d", (int)result);
 	}
 
 	/* install a handler for unrecoverable errors */
 
 	result = DVDSetFatalErrorCallBack (MyDVDErrorHandler, (void *)self);
 	if (result != noErr) {
-		NSLog(@"DVDSetFatalErrorCallBack returned %ld", result);
+		NSLog(@"DVDSetFatalErrorCallBack returned %d", (int)result);
 	}
 
 	/* Change the period for the recurring kDVDEventTitleTime event to 1000
@@ -462,7 +462,7 @@ error handlers, and defines the rate at which timer events arrive. */
 
 	result = DVDSetTimeEventRate (1000);
 	if (result != noErr) {
-		NSLog(@"DVDSetTimeEventRate returned %ld", result);
+		NSLog(@"DVDSetTimeEventRate returned %d", (int)result);
 	}
 }
 
@@ -479,7 +479,7 @@ media folder. */
 	{
 		OSStatus result = DVDIsValidMediaURL ((CFURLRef)mediaURL, &isValid);
 		if (result != noErr) {
-			NSLog(@"DVDIsValidMediaURL returned %ld", result);
+			NSLog(@"DVDIsValidMediaURL returned %d", (int)result);
 		}
 	}
 
@@ -550,7 +550,7 @@ and another media folder is already open, or (3) when the session is ending. */
 	if (mVolumePath) {
 		OSStatus result = DVDCloseMediaVolume();
 		if (result != noErr) {
-			NSLog(@"DVDCloseMediaVolume returned %ld", result);
+			NSLog(@"DVDCloseMediaVolume returned %d", (int)result);
 		}
 
 		[mVolumePath release];
@@ -559,7 +559,7 @@ and another media folder is already open, or (3) when the session is ending. */
 	else {
 		OSStatus result = DVDCloseMediaFile();
 		if (result != noErr) {
-			NSLog(@"DVDCloseMediaFile returned %ld", result);
+			NSLog(@"DVDCloseMediaFile returned %d", (int)result);
 		}
 	}
 
@@ -585,7 +585,7 @@ when the application is about to terminate. */
 		DVDUnregisterEventCallBack (mEventCallBackID);
 		OSStatus result = DVDDispose();
 		if (result != noErr) {
-			NSLog(@"DVDDispose returned %ld", result);
+			NSLog(@"DVDDispose returned %d", (int)result);
 		}
 		mEventCallBackID = 0;
 	}
@@ -652,7 +652,7 @@ region code is and how many changes remain. */
 	Boolean hasMedia = FALSE;
 	OSStatus result = DVDHasMedia (&hasMedia);
 	if (result != noErr) {
-		NSLog(@"DVDHasMedia returned %ld", result);
+		NSLog(@"DVDHasMedia returned %d", (int)result);
 	}
 	if (hasMedia) { return YES; }
 	else { return NO; }
@@ -855,7 +855,7 @@ presses the space bar. */
 		NSLog(@"Step 6: Play");
 		OSStatus result = DVDPlay();
 		if (result != noErr) {
-			NSLog(@"DVDPlay returned %ld", result);
+			NSLog(@"DVDPlay returned %d", (int)result);
 		}
 	}
 }
@@ -876,7 +876,7 @@ presses the space bar. */
 	if (mDVDState != kDVDStatePaused) {
 		OSStatus result = DVDPause();
 		if (result != noErr) {
-			NSLog(@"DVDPause returned %ld", result);
+			NSLog(@"DVDPause returned %d", (int)result);
 		}
 	}
 }
@@ -899,7 +899,7 @@ beginning of the media. */
 
 	OSStatus result = DVDStop();
 	if (result != noErr) {
-		NSLog(@"DVDStop returned %ld", result);
+		NSLog(@"DVDStop returned %d", (int)result);
 	}
 }
 
@@ -925,7 +925,7 @@ beginning of the media. */
 	if (mDVDState == kDVDStatePlaying) {
 		OSStatus result = DVDScan (kDVDScanRate4x, kDVDScanDirectionForward);
 		if (result != noErr) {
-			NSLog(@"DVDScan returned %ld", result);
+			NSLog(@"DVDScan returned %d", (int)result);
 		}
 	}
 }
@@ -938,7 +938,7 @@ beginning of the media. */
 	if (mDVDState == kDVDStatePlaying) {
 		OSStatus result = DVDScan (kDVDScanRate4x, kDVDScanDirectionBackward);
 		if (result != noErr) {
-			NSLog(@"DVDScan returned %ld", result);
+			NSLog(@"DVDScan returned %d", (int)result);
 		}
 	}
 }
@@ -952,7 +952,7 @@ Control window. Scene, chapter, and part of title (PTT) all mean the same thing.
 	if (mDVDState == kDVDStatePlaying) {
 		OSStatus result = DVDPreviousChapter();
 		if (result != noErr) {
-			NSLog(@"DVDPreviousChapter returned %ld", result);
+			NSLog(@"DVDPreviousChapter returned %d", (int)result);
 		}
 	}
 }
@@ -965,7 +965,7 @@ Control window. Scene, chapter, and part of title (PTT) all mean the same thing.
 	if (mDVDState == kDVDStatePlaying) {
 		OSStatus result = DVDNextChapter();
 		if (result != noErr) {
-			NSLog(@"DVDNextChapter returned %ld", result);
+			NSLog(@"DVDNextChapter returned %d", (int)result);
 		}
 	}
 }
@@ -985,19 +985,19 @@ go to the associated title. */
 		DVDMenu whichMenu;
 		OSStatus result = DVDIsOnMenu (&onMenu, &whichMenu);
 		if (result != noErr) {
-			NSLog(@"DVDIsOnMenu returned %ld", result);
+			NSLog(@"DVDIsOnMenu returned %d", (int)result);
 		}
 		// NSLog(@"onMenu = %d, whichMenu = %d", onMenu, whichMenu);
 
 		if (onMenu) {
 			result = DVDReturnToTitle();
 			if (result != noErr) {
-				NSLog(@"DVDReturnToTitle returned %ld", result);
+				NSLog(@"DVDReturnToTitle returned %d", (int)result);
 			}
 		} else {
 			result = DVDGoToMenu (kDVDMenuRoot);
 			if (result != noErr) {
-				NSLog(@"DVDGoToMenu returned %ld", result);
+				NSLog(@"DVDGoToMenu returned %d", (int)result);
 			}
 		}
 	}
@@ -1014,19 +1014,19 @@ Control window. */
 		UInt16 numAngles = 0, angle = 0;
 		OSStatus result = DVDGetNumAngles (&numAngles);
 		if (result != noErr) {
-			NSLog(@"DVDGetNumAngles returned %ld", result);
+			NSLog(@"DVDGetNumAngles returned %d", (int)result);
 		}
 		
 		result = DVDGetAngle (&angle);
 		if (result != noErr) {
-			NSLog(@"DVDGetAngle returned %ld", result);
+			NSLog(@"DVDGetAngle returned %d", (int)result);
 		}
 		
 		if (++angle > numAngles)
 			angle = 1;
 		result = DVDSetAngle (angle);
 		if (result != noErr) {
-			NSLog(@"DVDSetAngle returned %ld", result);
+			NSLog(@"DVDSetAngle returned %d", (int)result);
 		}
 	}
 }
@@ -1055,10 +1055,10 @@ Control window. It simply cycles though the bookmarks in the mBookmarks array. *
 
 - (IBAction) onNextBookmark:(id)sender 
 {
-	unsigned count = [mBookmarks count];
+	NSInteger count = [mBookmarks count];
 	if (count) {
 		/* index of next bookmark in array */
-		static unsigned next;
+		static NSInteger next;
 		[[mBookmarks objectAtIndex:next] gotoBookmark];
 		if (++next == count) {
 			/* reset to first bookmark */
@@ -1097,12 +1097,12 @@ menu. */
 
 	OSStatus result = DVDIsMuted (&isMuted);
 	if (result != noErr) {
-		NSLog(@"DVDIsMuted returned %ld", result);
+		NSLog(@"DVDIsMuted returned %d", (int)result);
 	}
 
 	result = DVDMute (!isMuted);
 	if (result != noErr) {
-		NSLog(@"DVDMute returned %ld", result);
+		NSLog(@"DVDMute returned %d", (int)result);
 	}
 }
 
@@ -1114,7 +1114,7 @@ Control window. */
 {
 	OSStatus result = DVDSetAudioVolume ([sender floatValue]);
 	if (result != noErr) {
-		NSLog(@"DVDSetAudioVolume returned %ld", result);
+		NSLog(@"DVDSetAudioVolume returned %d", (int)result);
 	}
 }
 
@@ -1197,7 +1197,7 @@ of which window is currently the key window. */
 	}
 
 	if (result != noErr) {
-		NSLog(@"DVDDoUserNavigation returned %ld", result);
+		NSLog(@"DVDDoUserNavigation returned %d", (int)result);
 	}
 
 	return keyIsHandled;

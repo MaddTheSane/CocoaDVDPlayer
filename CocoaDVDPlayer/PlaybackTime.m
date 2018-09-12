@@ -116,11 +116,11 @@ window. */
 	NSString *format;
 
 	if (timeBase == kTimeBaseElapsed) {
-		time = (timeElapsed + 500) / 1000;
+		time = (UInt32)((timeElapsed + 500) / 1000);
 		format = @"%02u:%02u:%02u";
 	}
 	else {
-		time = (timeRemaining + 500) / 1000;
+		time = (UInt32)((timeRemaining + 500) / 1000);
 		format = @"-%02u:%02u:%02u";
 	}
 
