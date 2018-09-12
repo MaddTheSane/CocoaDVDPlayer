@@ -154,8 +154,8 @@ current title. */
 
 - (CGFloat) titleAspectRatio
 {
-	static const CGFloat kStandardRatio = 4.0 / 3.0;
-	static const CGFloat kWideRatio = 16.0 / 9.0;
+	const CGFloat kStandardRatio = 4.0 / 3.0;
+	const CGFloat kWideRatio = 16.0 / 9.0;
 	CGFloat ratio = kStandardRatio;
 
 	DVDAspectRatio format = kDVDAspectRatioUninitialized;
