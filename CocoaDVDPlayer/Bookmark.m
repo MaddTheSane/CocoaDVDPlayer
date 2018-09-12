@@ -75,7 +75,7 @@ memory. */
 		/* get bookmark size */
 		OSStatus result = DVDGetBookmark (NULL, &size);
 		if (result != noErr) {
-			NSLog(@"DVDGetBookmark returned %ld", result);
+			NSLog(@"DVDGetBookmark returned %d", (int)result);
 		}
 		else {
 			/* allocate memory for bookmark data */
@@ -84,7 +84,7 @@ memory. */
 			/* get bookmark to current location */
 			result = DVDGetBookmark (data, &size);
 			if (result != noErr) {
-				NSLog(@"DVDGetBookmark returned %ld", result);
+				NSLog(@"DVDGetBookmark returned %d", (int)result);
 			}
 		}
 	}
@@ -107,7 +107,7 @@ memory. */
 {
 	OSStatus result = DVDGotoBookmark (data, size);
 	if (result != noErr) {
-		NSLog(@"DVDGotoBookmark returned %ld", result);
+		NSLog(@"DVDGotoBookmark returned %d", (int)result);
 	}
 }
 

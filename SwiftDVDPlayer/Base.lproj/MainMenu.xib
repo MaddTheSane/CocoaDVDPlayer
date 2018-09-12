@@ -13,7 +13,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Video" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" animationBehavior="default" id="21" userLabel="VideoWindow" customClass="VideoWindow">
+        <window title="Video" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" animationBehavior="default" id="21" userLabel="VideoWindow" customClass="VideoWindow" customModule="SwiftDVDPlayer" customModuleProvider="target">
             <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="376" width="640" height="480"/>
@@ -176,20 +176,20 @@
                 </menuItem>
             </items>
         </menu>
-        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="292" userLabel="ControlWindow" customClass="ControlWindow">
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="292" userLabel="ControlWindow" customClass="ControlWindow" customModule="SwiftDVDPlayer" customModuleProvider="target">
             <windowStyleMask key="styleMask" titled="YES" texturedBackground="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="109" y="44" width="400" height="157"/>
+            <rect key="contentRect" x="109" y="44" width="400" height="174"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="294">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="157"/>
+                <rect key="frame" x="0.0" y="0.0" width="400" height="174"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button toolTip=" Play " verticalHuggingPriority="750" id="303">
-                        <rect key="frame" x="20" y="49" width="44" height="27"/>
+                        <rect key="frame" x="20" y="47" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Play" imagePosition="only" alignment="center" borderStyle="border" inset="3" id="675">
-                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="PlayTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="675">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
@@ -197,9 +197,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Stop " verticalHuggingPriority="750" id="309">
-                        <rect key="frame" x="124" y="49" width="44" height="27"/>
+                        <rect key="frame" x="124" y="47" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Stop" imagePosition="only" alignment="center" borderStyle="border" inset="3" id="676">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="StopTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="676">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -208,9 +208,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Previous scene " verticalHuggingPriority="750" id="310">
-                        <rect key="frame" x="20" y="16" width="44" height="27"/>
+                        <rect key="frame" x="20" y="14" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Previous" imagePosition="only" alignment="center" borderStyle="border" inset="3" id="677">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="PreviousTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="677">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -219,9 +219,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Reverse scan " verticalHuggingPriority="750" id="311">
-                        <rect key="frame" x="72" y="16" width="44" height="27"/>
+                        <rect key="frame" x="72" y="14" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Reverse" imagePosition="only" alignment="center" continuous="YES" borderStyle="border" inset="3" id="678">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="ReverseTemplate" imagePosition="only" alignment="center" continuous="YES" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="678">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -230,9 +230,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Forward scan " verticalHuggingPriority="750" id="312">
-                        <rect key="frame" x="124" y="16" width="44" height="27"/>
+                        <rect key="frame" x="124" y="14" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Forward" imagePosition="only" alignment="center" continuous="YES" borderStyle="border" inset="3" id="679">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="ForwardTemplate" imagePosition="only" alignment="center" continuous="YES" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="679">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -241,9 +241,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Next scene " verticalHuggingPriority="750" id="313">
-                        <rect key="frame" x="176" y="16" width="44" height="27"/>
+                        <rect key="frame" x="176" y="14" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Next" imagePosition="only" alignment="center" borderStyle="border" inset="3" id="680">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NextTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="680">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -252,9 +252,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Toggle between menu and title " verticalHuggingPriority="750" id="326">
-                        <rect key="frame" x="284" y="49" width="44" height="27"/>
+                        <rect key="frame" x="284" y="47" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Menu" imagePosition="overlaps" alignment="center" borderStyle="border" inset="3" id="685">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="MenuTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="685">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -263,9 +263,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Eject disc " verticalHuggingPriority="750" id="576">
-                        <rect key="frame" x="176" y="49" width="44" height="27"/>
+                        <rect key="frame" x="176" y="47" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Eject" imagePosition="only" alignment="center" borderStyle="border" inset="3" id="686">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="EjectTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="686">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -274,9 +274,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Next camera angle " verticalHuggingPriority="750" id="577">
-                        <rect key="frame" x="336" y="49" width="45" height="27"/>
+                        <rect key="frame" x="336" y="47" width="45" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Camera" imagePosition="overlaps" alignment="center" borderStyle="border" inset="3" id="687">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="CameraTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="687">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -285,9 +285,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Create bookmark " verticalHuggingPriority="750" id="594">
-                        <rect key="frame" x="284" y="18" width="44" height="27"/>
+                        <rect key="frame" x="284" y="16" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="New" imagePosition="only" alignment="center" borderStyle="border" inset="3" id="688">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="688">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -296,9 +296,9 @@
                         </connections>
                     </button>
                     <button toolTip=" Go to next bookmark " verticalHuggingPriority="750" id="596">
-                        <rect key="frame" x="336" y="18" width="44" height="27"/>
+                        <rect key="frame" x="336" y="16" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Action" imagePosition="only" alignment="center" borderStyle="border" inset="3" id="689">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSActionTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="689">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -307,9 +307,9 @@
                         </connections>
                     </button>
                     <imageView id="610">
-                        <rect key="frame" x="113" y="90" width="182" height="49"/>
+                        <rect key="frame" x="110" y="96" width="180" height="78"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" image="developer" id="690"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" image="ADC" id="690"/>
                     </imageView>
                     <slider toolTip=" Adjust volume " horizontalHuggingPriority="750" id="630">
                         <rect key="frame" x="245" y="18" width="15" height="61"/>
@@ -321,8 +321,8 @@
                             <action selector="onAudioVolume:" target="514" id="631"/>
                         </connections>
                     </slider>
-                    <textField verticalHuggingPriority="750" id="319" customClass="PlaybackTime">
-                        <rect key="frame" x="305" y="119" width="72" height="18"/>
+                    <textField verticalHuggingPriority="750" id="319" customClass="PlaybackTime" customModule="SwiftDVDPlayer" customModuleProvider="target">
+                        <rect key="frame" x="305" y="137" width="72" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="00:00:00" id="683">
                             <font key="font" metaFont="system"/>
@@ -331,9 +331,9 @@
                         </textFieldCell>
                     </textField>
                     <button toolTip=" Pause " verticalHuggingPriority="750" id="637">
-                        <rect key="frame" x="72" y="49" width="44" height="27"/>
+                        <rect key="frame" x="72" y="47" width="44" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="Pause" imagePosition="only" alignment="center" borderStyle="border" inset="3" id="694">
+                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="PauseTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="3" id="694">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -342,7 +342,7 @@
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="626">
-                        <rect key="frame" x="23" y="118" width="54" height="18"/>
+                        <rect key="frame" x="23" y="136" width="54" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" enabled="NO" sendsActionOnEndEditing="YES" alignment="right" title="Title:" id="691">
                             <font key="font" metaFont="system"/>
@@ -351,7 +351,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="314">
-                        <rect key="frame" x="17" y="93" width="60" height="18"/>
+                        <rect key="frame" x="17" y="111" width="60" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" enabled="NO" sendsActionOnEndEditing="YES" alignment="right" title="Scene:" id="681">
                             <font key="font" metaFont="system"/>
@@ -360,7 +360,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="321">
-                        <rect key="frame" x="77" y="93" width="30" height="18"/>
+                        <rect key="frame" x="77" y="111" width="30" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="-" id="684">
                             <font key="font" metaFont="system"/>
@@ -369,7 +369,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="634">
-                        <rect key="frame" x="77" y="118" width="30" height="18"/>
+                        <rect key="frame" x="77" y="136" width="30" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="-" id="693">
                             <font key="font" metaFont="system"/>
@@ -382,32 +382,33 @@
             <connections>
                 <outlet property="delegate" destination="514" id="551"/>
             </connections>
+            <point key="canvasLocation" x="275" y="650"/>
         </window>
-        <customObject id="514" userLabel="Controller" customClass="Controller">
+        <customObject id="514" userLabel="Controller" customClass="DVDAppDelegate" customModule="SwiftDVDPlayer" customModuleProvider="target">
             <connections>
-                <outlet property="mAudioControl" destination="630" id="632"/>
-                <outlet property="mControlWindow" destination="292" id="642"/>
-                <outlet property="mPlayButton" destination="303" id="616"/>
-                <outlet property="mSceneText" destination="321" id="645"/>
-                <outlet property="mTimeText" destination="319" id="601"/>
-                <outlet property="mTitleText" destination="634" id="635"/>
-                <outlet property="mVideoWindow" destination="21" id="516"/>
+                <outlet property="audioControl" destination="630" id="aMi-bh-JAF"/>
+                <outlet property="controlWindow" destination="292" id="0SG-T2-3Yt"/>
+                <outlet property="playButton" destination="303" id="ZBN-xy-HoN"/>
+                <outlet property="sceneText" destination="321" id="A2d-lx-AkE"/>
+                <outlet property="timeText" destination="319" id="cbu-EL-gt9"/>
+                <outlet property="titleText" destination="634" id="Jma-a6-saL"/>
+                <outlet property="videoWindow" destination="21" id="Gul-6W-RI5"/>
             </connections>
         </customObject>
     </objects>
     <resources>
-        <image name="Action" width="14" height="14"/>
-        <image name="Camera" width="21" height="14"/>
-        <image name="Eject" width="14" height="12"/>
-        <image name="Forward" width="14" height="12"/>
-        <image name="Menu" width="14" height="12"/>
-        <image name="New" width="14" height="12"/>
-        <image name="Next" width="14" height="12"/>
-        <image name="Pause" width="14" height="12"/>
-        <image name="Play" width="14" height="12"/>
-        <image name="Previous" width="14" height="12"/>
-        <image name="Reverse" width="14" height="12"/>
-        <image name="Stop" width="14" height="12"/>
-        <image name="developer" width="131" height="27"/>
+        <image name="ADC" width="164" height="62"/>
+        <image name="CameraTemplate" width="21" height="14"/>
+        <image name="EjectTemplate" width="14" height="12"/>
+        <image name="ForwardTemplate" width="14" height="12"/>
+        <image name="MenuTemplate" width="14" height="12"/>
+        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NextTemplate" width="14" height="12"/>
+        <image name="PauseTemplate" width="14" height="12"/>
+        <image name="PlayTemplate" width="14" height="12"/>
+        <image name="PreviousTemplate" width="14" height="12"/>
+        <image name="ReverseTemplate" width="14" height="12"/>
+        <image name="StopTemplate" width="14" height="12"/>
     </resources>
 </document>

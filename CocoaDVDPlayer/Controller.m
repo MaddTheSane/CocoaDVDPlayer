@@ -110,9 +110,10 @@ actually does the work. */
 ********************************************************************************
 */
 
-/* These methods are used inside this file only. */
+/* These methods are used inside this file only. Instead of declaring them in
+Controller.h, we declare them here in a category that extends the class. */
 
-@interface Controller (InternalMethods) <NSApplicationDelegate>
+@interface Controller (InternalMethods)
 
 - (BOOL) searchMountedDVDDisc;
 - (BOOL) hasMedia;
@@ -120,7 +121,7 @@ actually does the work. */
 - (BOOL) openMedia:(NSString *)inPath isVolume:(BOOL)isVolume;
 
 - (UInt16) setAudioVolume:(BOOL)up;
-- (int) displayAlertWithMessage:(NSString *)msgKey withInfo:(NSString *)infoKey;
+- (NSModalResponse) displayAlertWithMessage:(NSString *)msgKey withInfo:(NSString *)infoKey;
 
 - (void) beginSession;
 - (void) endSession;
@@ -164,22 +165,22 @@ applicationDidFinishLaunching. */
 		/* register for several notifications posted to the shared workspace
 		notification center */
 
-		NSNotificationCenter *center = 
+		NSNotificationCenter *center =
 			[[NSWorkspace sharedWorkspace] notificationCenter];
 
-		[center addObserver:self 
-			selector:@selector(deviceDidMount:) 
-			name:NSWorkspaceDidMountNotification 
+		[center addObserver:self
+			selector:@selector(deviceDidMount:)
+			name:NSWorkspaceDidMountNotification
 			object:NULL];
-			
-		[center addObserver:self 
+		
+		[center addObserver:self
 			selector:@selector(machineWillSleep:)
-			name:NSWorkspaceWillSleepNotification 
+			name:NSWorkspaceWillSleepNotification
 			object:NULL];
-			
-		[center addObserver:self 
+		
+		[center addObserver:self
 			selector:@selector(machineDidWake:)
-			name:NSWorkspaceDidWakeNotification 
+			name:NSWorkspaceDidWakeNotification
 			object:NULL];
 
 
@@ -317,7 +318,8 @@ range. */
 		NSLog(@"DVDGetAudioVolumeInfo returned %ld", result);
 	}
 
-	UInt16 newLevel;
+	/* default action is to maintain the current level */
+	UInt16 newLevel = curLevel;
 
 	/* compute how much we are going to change */
 	UInt16 delta = (maxLevel - minLevel + 1) / 16;
@@ -378,7 +380,7 @@ message. Both messages should be stored in a Localizable.strings file inside
 the application bundle. You pass in the two string keys that correspond to the
 text you want to display. */
 
-- (NSInteger) displayAlertWithMessage:(NSString *)msgKey withInfo:(NSString *)infoKey
+- (NSModalResponse) displayAlertWithMessage:(NSString *)msgKey withInfo:(NSString *)infoKey
 {
 	NSString *messageText = nil;
 	NSString *informativeText = nil;
@@ -396,7 +398,7 @@ text you want to display. */
 	[alert setAlertStyle: NSCriticalAlertStyle];
 	[alert setMessageText: messageText];
 	[alert setInformativeText: informativeText];
-	NSInteger result = [alert runModal];
+	NSModalResponse result = [alert runModal];
 	[alert release];
 	return result;
 }
@@ -414,7 +416,7 @@ error handlers, and defines the rate at which timer events arrive. */
 	OSStatus result = DVDInitialize();
 	if (result != noErr) {
 		/* we can't do anything useful now, so we handle the error and exit */
-		NSLog(@"DVDInitialize returned %ld", result);
+		NSLog(@"DVDInitialize returned %d", (int)result);
 		if (result == kDVDErrorInitializingLib) {
 			/* notify user that another client is using the framework */
 			[self displayAlertWithMessage:@"frameworkBusy" withInfo:@"frameworkBusyInfo"];
@@ -559,7 +561,7 @@ and another media folder is already open, or (3) when the session is ending. */
 		if (result != noErr) {
 			NSLog(@"DVDCloseMediaFile returned %ld", result);
 		}
-	} 
+	}
 
 	/* clear all information in Controller window */
 	[self resetUI];
@@ -630,8 +632,8 @@ region code is and how many changes remain. */
 	SInt16 numChangesLeft = -1;
 	DVDGetDiscRegionCode (&discRegions); 
 	DVDGetDriveRegionCode (&driveRegion, &numChangesLeft);
-	NSLog(@"Disc Regions: 0x%lx", discRegions);
-	NSLog(@"Drive Region: 0x%lx", driveRegion);
+	NSLog(@"Disc Regions: 0x%x", (unsigned int)discRegions);
+	NSLog(@"Drive Region: 0x%x", (unsigned int)driveRegion);
 	NSLog(@"Changes Left: %d", numChangesLeft);
 
 	/* DVD Playback Services checks for a region match whenever you open
@@ -694,7 +696,7 @@ receive in the beginSession method. */
 
 	switch ([event eventCode]) {
 		case kDVDEventTitleTime: {
-			[mTimeText setTimeElapsed:[event eventData1] 
+			[mTimeText setTimeElapsed: [event eventData1] 
 				timeRemaining: ([event eventData2] - [event eventData1])];
 			break;
 		}
@@ -722,6 +724,9 @@ receive in the beginSession method. */
 			[mVideoWindow setWindowSize:kVideoSizeCurrent];
 			break;
 		}
+			
+		default:
+			break;
 	}
 
 	[event release];
@@ -742,7 +747,7 @@ void MyDVDErrorHandler (DVDErrorCode inErrorCode, void *inRefCon)
 
 - (void) handleDVDError:(DVDErrorCode)errorCode
 {
-	NSLog(@"fatal error %ld", errorCode);
+	NSLog(@"fatal error %d", (int)errorCode);
 	[NSApp terminate:self];
 }
 
@@ -994,7 +999,7 @@ go to the associated title. */
 			if (result != noErr) {
 				NSLog(@"DVDGoToMenu returned %ld", result);
 			}
-		}	
+		}
 	}
 }
 
@@ -1017,7 +1022,7 @@ Control window. */
 			NSLog(@"DVDGetAngle returned %ld", result);
 		}
 		
-		if (++angle > numAngles) 
+		if (++angle > numAngles)
 			angle = 1;
 		result = DVDSetAngle (angle);
 		if (result != noErr) {
@@ -1050,7 +1055,7 @@ Control window. It simply cycles though the bookmarks in the mBookmarks array. *
 
 - (IBAction) onNextBookmark:(id)sender 
 {
-	NSUInteger count = [mBookmarks count];
+	unsigned count = [mBookmarks count];
 	if (count) {
 		/* index of next bookmark in array */
 		static unsigned next;

@@ -66,7 +66,7 @@ VideoWindow.h, we declare them here in a category that extends the class. */
 
 - (void) setVideoBounds; 
 - (void) setVideoDisplay;
-- (float) titleAspectRatio;
+- (CGFloat) titleAspectRatio;
 - (NSSize) getVideoSize;
 
 @end
@@ -100,7 +100,7 @@ VideoWindow.h, we declare them here in a category that extends the class. */
 {
 	/* pass all key-down events in this window to our delegate, the Controller
 	object */
-	BOOL eventHandled = [(Controller *) [self delegate] onKeyDown:theEvent];
+	BOOL eventHandled = [(Controller*)[self delegate] onKeyDown:theEvent];
 
 	if (eventHandled == NO) {
 		[super keyDown:theEvent];
@@ -152,11 +152,11 @@ in the window. */
 /* This method returns a number that represents the aspect ratio of the
 current title. */
 
-- (float) titleAspectRatio
+- (CGFloat) titleAspectRatio
 {
-	const float kStandardRatio = 4.0 / 3.0;
-	const float kWideRatio = 16.0 / 9.0;
-	float ratio = kStandardRatio;
+	static const CGFloat kStandardRatio = 4.0 / 3.0;
+	static const CGFloat kWideRatio = 16.0 / 9.0;
+	CGFloat ratio = kStandardRatio;
 
 	DVDAspectRatio format = kDVDAspectRatioUninitialized;
 	DVDGetAspectRatio (&format);
@@ -206,7 +206,7 @@ changes. */
 - (void) setWindowSize: (PlaybackVideoSize)inSize
 {
 	/* get the aspect ratio of the current title */
-	float titleRatio = [self titleAspectRatio];
+	CGFloat titleRatio = [self titleAspectRatio];
 
 	/* get the bounding rectangle of the display for this window, excluding
 	menu bar and dock */
@@ -218,7 +218,7 @@ changes. */
 	NSSize bounds = [[self contentView] bounds].size;
 
 	/* now compute the new bounds */
-	switch (inSize) 
+	switch (inSize)
 	{
 		case kVideoSizeCurrent: {
 			/* apply the aspect ratio to the new size */
@@ -245,7 +245,7 @@ changes. */
 		case kVideoSizeMax: {
 
 			/* find the largest frame that fits inside the display bounds */
-			float screenRatio = screenBounds.size.width / screenBounds.size.height;
+			CGFloat screenRatio = screenBounds.size.width / screenBounds.size.height;
 			if (screenRatio >= titleRatio) {
 				bounds.height = screenBounds.size.height;
 				bounds.width = screenBounds.size.height * titleRatio;
@@ -301,7 +301,7 @@ launching and the Controller object sends us the setupVideoWindow message, and
 
 	/* get the ID of the display that contains the largest part of the window */
 	CGDirectDisplayID newDisplay = (CGDirectDisplayID) 
-		[[[[self screen] deviceDescription] valueForKey:@"NSScreenNumber"] intValue];
+		[[[[self screen] deviceDescription] valueForKey:@"NSScreenNumber"] unsignedIntValue];
 
 	/* if the display has changed, set the new display */
 	if (newDisplay != curDisplay) {
@@ -315,7 +315,7 @@ launching and the Controller object sends us the setupVideoWindow message, and
 			curDisplay = newDisplay;
 		}
 		else {
-			NSLog(@"video display %u not supported", newDisplay);
+			NSLog(@"video display %d not supported", newDisplay);
 		}
 	}
 }

@@ -55,7 +55,7 @@
 #import "VideoWindow.h"
 
 
-@interface Controller : NSObject
+@interface Controller : NSObject <NSApplicationDelegate>
 {
 	IBOutlet NSButton *mPlayButton;
 	IBOutlet NSSlider *mAudioControl;
