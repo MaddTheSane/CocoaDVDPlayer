@@ -73,9 +73,9 @@ actually does the work. */
 	data1:(DVDEventValue)eventData1 
 	data2:(DVDEventValue)eventData2;
 
-- (DVDEventCode) eventCode;
-- (DVDEventValue) eventData1;
-- (DVDEventValue) eventData2;
+@property (readonly) DVDEventCode eventCode;
+@property (readonly) DVDEventValue eventData1;
+@property (readonly) DVDEventValue eventData2;
 
 @end
 
@@ -95,9 +95,9 @@ actually does the work. */
 }
 
 
-- (DVDEventCode) eventCode { return mEventCode; }
-- (DVDEventValue) eventData1 { return mEventData1; }
-- (DVDEventValue) eventData2 { return mEventData2; }
+@synthesize eventCode=mEventCode;
+@synthesize eventData1=mEventData1;
+@synthesize eventData2=mEventData2;
 
 @end
 
@@ -113,7 +113,7 @@ actually does the work. */
 /* These methods are used inside this file only. Instead of declaring them in
 Controller.h, we declare them here in a category that extends the class. */
 
-@interface Controller (InternalMethods)
+@interface Controller ()
 
 - (BOOL) searchMountedDVDDisc;
 - (BOOL) hasMedia;
