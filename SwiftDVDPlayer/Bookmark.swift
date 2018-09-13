@@ -11,7 +11,7 @@ import DVDPlayback
 
 /// before creating a new bookmark object, media needs to be open and playing
 final class Bookmark: Codable {
-	private var data = Data()
+	private var data: Data
 
 	/// This method creates a bookmark that represents the current playback
 	/// position. We call `DVDGetBookmark` twice: (1) to find out how much memory to
@@ -21,22 +21,24 @@ final class Bookmark: Codable {
 		/* get bookmark size */
 		var size: UInt32 = 0
 		var result = DVDGetBookmark(nil, &size);
+		guard result == noErr else {
+			NSLog("DVDGetBookmark returned %d", result);
+			data = Data()
+			return
+		}
+		/* allocate memory for bookmark data */
+		data = Data(count: Int(size))
+		
+		/* get bookmark to current location */
+		result = data.withUnsafeMutableBytes { (ct: UnsafeMutablePointer<UInt8>) -> OSStatus in
+			return DVDGetBookmark(ct, &size)
+		}
 		if result != noErr {
 			NSLog("DVDGetBookmark returned %d", result);
-		} else {
-			/* allocate memory for bookmark data */
-			data = Data(count: Int(size))
-			
-			/* get bookmark to current location */
-			result = data.withUnsafeMutableBytes { (ct: UnsafeMutablePointer<UInt8>) -> OSStatus in
-				return DVDGetBookmark(ct, &size)
-			}
-			if (result != noErr) {
-				NSLog("DVDGetBookmark returned %d", result);
-			}
 		}
 	}
 	
+	/// This method uses our bookmark to set the new playback position.
 	func gotoBookmark() {
 		let dataSize = UInt32(data.count)
 		let result = data.withUnsafeMutableBytes { (ct: UnsafeMutablePointer<UInt8>) -> OSStatus in

@@ -81,12 +81,11 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		NSApplication.shared.delegate = self
 	}
 	
-	/* The setAudioVolume message is sent by the two action methods onVolumeUp
-	and onVolumeDown, in response to a user request to increase or decrease the
-	audio level. The audio level is an integer in the range minLevel (0) to maxLevel
-	(255). We change the level by an increment of 16, which is 1/16 of the total
-	range. */
-	
+	/// The setAudioVolume message is sent by the two action methods onVolumeUp
+	/// and onVolumeDown, in response to a user request to increase or decrease the
+	/// audio level. The audio level is an integer in the range `minLevel` (*0*) to `maxLevel`
+	/// (*255*). We change the level by an increment of 16, which is 1/16 of the total
+	/// range.
 	func changeAudioVolume(up: Bool) -> UInt16 {
 		/* get range and current audio level */
 		var minLevel: UInt16 = 0
@@ -110,7 +109,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		
 		/* set the new audio level */
 		let result = DVDSetAudioVolume(newLevel);
-		assert(result == noErr, "DVDSetAudioVolume returned \(result)");
+		if result != noErr {
+			print("DVDSetAudioVolume returned \(result)")
+		}
 		
 		/* return the new level, which we use to adjust the audio slider */
 		return newLevel;
@@ -137,7 +138,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	/// by notifying DVD Playback Services.
 	@objc private func machineWillSleep(_ notification: NSNotification) {
 		let result = DVDSleep()
-		assert(result == 0, "DVDSleep returned \(result)")
+		if result != noErr {
+			print("DVDSleep returned \(result)")
+		}
 	}
 	
 	/// The machineDidWake notification is received when the system is no longer
@@ -145,7 +148,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	/// notifying DVD Playback Services.
 	@objc private func machineDidWake(_ notification: NSNotification) {
 		let result = DVDWakeUp();
-		assert(result == 0, "DVDWakeUp returned \(result)");
+		if result != noErr {
+			print("DVDWakeUp returned \(result)")
+		}
 	}
 	
 	fileprivate func handleDVDEvent(_ event: DVDEvent) {
@@ -261,8 +266,8 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		return alert.runModal()
 	}
 	
-	/** This method starts a new playback session, registers our DVD event and DVD
-	error handlers, and defines the rate at which timer events arrive. */
+	/// This method starts a new playback session, registers our DVD event and DVD
+	/// error handlers, and defines the rate at which timer events arrive.
 	func beginSession() {
 		/* start a new playback session */
 		

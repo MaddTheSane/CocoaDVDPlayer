@@ -112,7 +112,9 @@ class VideoWindow: NSWindow {
 		NSLog("Step 2: Set Video Window");
 		
 		let result = DVDSetVideoWindowID(UInt32(windowNumber))
-		assert(result == noErr, "DVDSetVideoWindowID returned \(result)")
+		if result != noErr {
+			print("DVDSetVideoWindowID returned \(result)")
+		}
 		
 		setVideoDisplay()
 		
@@ -213,7 +215,9 @@ class VideoWindow: NSWindow {
 			NSLog("Step 3: Set Video Display");
 			var isSupported: DarwinBoolean = false;
 			let result = DVDSwitchToDisplay(newDisplay, &isSupported);
-			assert(result == noErr, "DVDSwitchToDisplay returned \(result)");
+			if result != noErr {
+				print("DVDSwitchToDisplay returned \(result)")
+			}
 			
 			if isSupported.boolValue {
 				curDisplay.value = newDisplay;
@@ -237,7 +241,9 @@ class VideoWindow: NSWindow {
 		var bounds = CGRect(x: 0, y: frame.size.height - content.size.height, width: content.size.width, height: content.size.height)
 		let result = DVDSetVideoCGBounds(&bounds);
 		
-		assert(result == noErr, "DVDSetVideoCGBounds returned \(result)")
+		if result != noErr {
+			print("DVDSetVideoCGBounds returned \(result)")
+		}
 	}
 
 	//MARK: - NSWindow notifications
