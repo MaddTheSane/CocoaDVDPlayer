@@ -766,19 +766,19 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		var result = noErr
 		
 		switch key {
-		case UInt16(NSUpArrowFunctionKey):
+		case UInt16(NSEvent.SpecialKey.upArrow.rawValue):
 			result = DVDDoUserNavigation(.moveUp)
 			
-		case UInt16(NSDownArrowFunctionKey):
+		case UInt16(NSEvent.SpecialKey.downArrow.rawValue):
 			result = DVDDoUserNavigation(.moveDown)
 			
-		case UInt16(NSLeftArrowFunctionKey):
+		case UInt16(NSEvent.SpecialKey.leftArrow.rawValue):
 			result = DVDDoUserNavigation(.moveLeft)
 			
-		case UInt16(NSRightArrowFunctionKey):
+		case UInt16(NSEvent.SpecialKey.rightArrow.rawValue):
 			result = DVDDoUserNavigation(.moveRight)
 			
-		case UInt16(NSCarriageReturnCharacter), UInt16(NSEnterCharacter):
+		case UInt16(NSEvent.SpecialKey.carriageReturn.rawValue), UInt16(NSEvent.SpecialKey.enter.rawValue):
 			result = DVDDoUserNavigation(.enter)
 			
 		case 0x20: //space
