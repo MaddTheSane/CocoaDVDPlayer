@@ -45,8 +45,8 @@ class VideoWindow: NSWindow {
 		}
 	}
 
-	/* This method overrides NSWindow to handle button mouse-overs and mouse-clicks
-	in the window. */
+	/// This method overrides NSWindow to handle button mouse-overs and mouse-clicks
+	/// in the window.
 	override func sendEvent(_ theEvent: NSEvent) {
 		/* index of selected button in DVD menu */
 		var index = Int32(kDVDButtonIndexNone)
