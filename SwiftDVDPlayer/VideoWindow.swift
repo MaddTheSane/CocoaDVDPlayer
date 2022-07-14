@@ -53,19 +53,19 @@ class VideoWindow: NSWindow {
 		
 		
 		/* get mouse location */
-		var location = theEvent.locationInWindow;
+		var location = theEvent.locationInWindow
 		location.y = self.frame.size.height - location.y
-		var err = noErr;
+		var err = noErr
 		
 		switch theEvent.type {
 		case .mouseMoved:
-			err = DVDDoMenuCGMouseOver(&location, &index);
-			break;
+			err = DVDDoMenuCGMouseOver(&location, &index)
+			break
 		case .leftMouseDown:
-			err = DVDDoMenuCGClick(&location, &index);
-			break;
+			err = DVDDoMenuCGClick(&location, &index)
+			break
 		default:
-			break;
+			break
 		}
 		_ = err
 		
@@ -109,7 +109,7 @@ class VideoWindow: NSWindow {
 	/// setupVideoWindow message is sent by the Controller object during playback
 	/// session initialization.
 	func setupVideoWindow() {
-		NSLog("Step 2: Set Video Window");
+		NSLog("Step 2: Set Video Window")
 		
 		let result = DVDSetVideoWindowID(UInt32(windowNumber))
 		if result != noErr {
@@ -130,7 +130,7 @@ class VideoWindow: NSWindow {
 		/* get the native height and width of the media */
 		var width: UInt16 = 720
 		var height: UInt16 = 480
-		DVDGetNativeVideoSize(&width, &height);
+		DVDGetNativeVideoSize(&width, &height)
 		
 		var size = NSSize()
 		size.height = CGFloat(height)
@@ -154,7 +154,7 @@ class VideoWindow: NSWindow {
 		let screenBounds = screen!.visibleFrame
 		
 		/* create and initialize a rectangle for the new content area */
-		let frame = self.frame;
+		let frame = self.frame
 		var topLeft = NSPoint(x: frame.origin.x, y: frame.origin.y + frame.size.height)
 		var bounds = contentView!.bounds.size
 		
@@ -162,29 +162,29 @@ class VideoWindow: NSWindow {
 		switch inSize {
 		case .current:
 			/* apply the aspect ratio to the new size */
-			bounds.width = bounds.height * titleRatio;
+			bounds.width = bounds.height * titleRatio
 			if bounds.width > screenBounds.size.width {
-				bounds.width = screenBounds.size.width;
-				bounds.height = screenBounds.size.width * (1.0 / titleRatio);
+				bounds.width = screenBounds.size.width
+				bounds.height = screenBounds.size.width * (1.0 / titleRatio)
 			}
 			
 		case .normal:
-			bounds = getVideoSize();
+			bounds = getVideoSize()
 			
 		case .small:
-			bounds = getVideoSize();
-			bounds.width /= 2;
-			bounds.height /= 2;
+			bounds = getVideoSize()
+			bounds.width /= 2
+			bounds.height /= 2
 			
 		case .max:
 			/* find the largest frame that fits inside the display bounds */
-			let screenRatio = screenBounds.size.width / screenBounds.size.height;
+			let screenRatio = screenBounds.size.width / screenBounds.size.height
 			if screenRatio >= titleRatio {
-				bounds.height = screenBounds.size.height;
-				bounds.width = screenBounds.size.height * titleRatio;
+				bounds.height = screenBounds.size.height
+				bounds.width = screenBounds.size.height * titleRatio
 			} else {
-				bounds.width = screenBounds.size.width;
-				bounds.height = screenBounds.size.width * (1.0 / titleRatio);
+				bounds.width = screenBounds.size.width
+				bounds.height = screenBounds.size.width * (1.0 / titleRatio)
 			}
 			
 			/* move window to top left corner of screen */
@@ -212,17 +212,17 @@ class VideoWindow: NSWindow {
 		
 		/* if the display has changed, set the new display */
 		if newDisplay != curDisplay.value {
-			NSLog("Step 3: Set Video Display");
-			var isSupported: DarwinBoolean = false;
-			let result = DVDSwitchToDisplay(newDisplay, &isSupported);
+			NSLog("Step 3: Set Video Display")
+			var isSupported: DarwinBoolean = false
+			let result = DVDSwitchToDisplay(newDisplay, &isSupported)
 			if result != noErr {
 				print("DVDSwitchToDisplay returned \(result)")
 			}
 			
 			if isSupported.boolValue {
-				curDisplay.value = newDisplay;
+				curDisplay.value = newDisplay
 			} else {
-				NSLog("video display %d not supported", newDisplay);
+				NSLog("video display %d not supported", newDisplay)
 			}
 		}
 	}
@@ -233,13 +233,13 @@ class VideoWindow: NSWindow {
 	/// setupVideoWindow message, (2) when the user resizes our window frame, and (3)
 	/// when the aspect ratio of the title changes.
 	func setVideoBounds() {
-		NSLog("Step 4: Set Video Bounds");
+		NSLog("Step 4: Set Video Bounds")
 		
 		let content = self.contentView!.bounds
 		let frame = self.frame
 		
 		var bounds = CGRect(x: 0, y: frame.size.height - content.size.height, width: content.size.width, height: content.size.height)
-		let result = DVDSetVideoCGBounds(&bounds);
+		let result = DVDSetVideoCGBounds(&bounds)
 		
 		if result != noErr {
 			print("DVDSetVideoCGBounds returned \(result)")

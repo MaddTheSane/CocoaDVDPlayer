@@ -44,16 +44,16 @@ class PlaybackTime: NSTextField {
 		
 		if timeBase == .elapsed {
 			time = UInt32(self.time.elapsed + 500) / 1000
-			format = "%02u:%02u:%02u";
+			format = "%02u:%02u:%02u"
 		} else {
 			time = UInt32(self.time.remaining + 500) / 1000
-			format = "-%02u:%02u:%02u";
+			format = "-%02u:%02u:%02u"
 		}
 		
-		let hours = time / 3600;
-		time -= hours * 3600;
-		let mins = time / 60;
-		let secs = time % 60;
+		let hours = time / 3600
+		time -= hours * 3600
+		let mins = time / 60
+		let secs = time % 60
 		
 		let timeString = String(format: format, hours, mins, secs)
 		stringValue = timeString

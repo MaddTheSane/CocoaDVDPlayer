@@ -3,19 +3,6 @@
     {
       "filename" : "PlayTemplate.pdf",
       "idiom" : "universal"
-    },
-    {
-      "filename" : "Play.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
     }
   ],
   "info" : {

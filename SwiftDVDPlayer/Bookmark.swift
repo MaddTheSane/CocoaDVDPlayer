@@ -20,9 +20,9 @@ final class Bookmark: Codable {
 	init() {
 		/* get bookmark size */
 		var size: UInt32 = 0
-		var result = DVDGetBookmark(nil, &size);
+		var result = DVDGetBookmark(nil, &size)
 		guard result == noErr else {
-			NSLog("DVDGetBookmark returned %d", result);
+			NSLog("DVDGetBookmark returned %d", result)
 			data = Data()
 			return
 		}
@@ -34,7 +34,7 @@ final class Bookmark: Codable {
 			return DVDGetBookmark(ct, &size)
 		}
 		if result != noErr {
-			NSLog("DVDGetBookmark returned %d", result);
+			NSLog("DVDGetBookmark returned %d", result)
 		}
 	}
 	
