@@ -91,30 +91,30 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		var minLevel: UInt16 = 0
 		var curLevel: UInt16 = 0
 		var maxLevel: UInt16 = 0
-		DVDGetAudioVolumeInfo(&minLevel, &curLevel, &maxLevel);
+		DVDGetAudioVolumeInfo(&minLevel, &curLevel, &maxLevel)
 		
 		/* default action is to maintain the current level */
-		var newLevel = curLevel;
+		var newLevel = curLevel
 		
 		/* compute how much we are going to change */
-		let delta = (maxLevel - minLevel + 1) / 16;
+		let delta = (maxLevel - minLevel + 1) / 16
 		
 		if up {
 			/* compute the next level in the up direction, clamping the value to maxLevel */
-			newLevel = min(curLevel + delta, maxLevel);
+			newLevel = min(curLevel + delta, maxLevel)
 		} else {
 			/* compute the next level in the down direction, clamping the value to minLevel */
-			newLevel = max(curLevel - delta, minLevel);
+			newLevel = max(curLevel - delta, minLevel)
 		}
 		
 		/* set the new audio level */
-		let result = DVDSetAudioVolume(newLevel);
+		let result = DVDSetAudioVolume(newLevel)
 		if result != noErr {
 			print("DVDSetAudioVolume returned \(result)")
 		}
 		
 		/* return the new level, which we use to adjust the audio slider */
-		return newLevel;
+		return newLevel
 	}
 	
 	/// The `deviceDidMount` notification is received when the system mounts a
@@ -125,7 +125,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	@objc private func deviceDidMount(_ notification: NSNotification) {
 		if dvdState != .playing {
 			let devicePath = notification.userInfo![NSWorkspace.volumeURLUserInfoKey] as! URL
-			NSLog("Device did mount: %@", devicePath as NSURL);
+			NSLog("Device did mount: %@", devicePath as NSURL)
 			
 			/* DVD volumes have a VIDEO_TS media folder at the root level */
 			let mediaPath = devicePath.appendingPathComponent("VIDEO_TS", isDirectory: true)
@@ -147,7 +147,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	/// sleeping. We registered for this notification in our init method. We respond by
 	/// notifying DVD Playback Services.
 	@objc private func machineDidWake(_ notification: NSNotification) {
-		let result = DVDWakeUp();
+		let result = DVDWakeUp()
 		if result != noErr {
 			print("DVDWakeUp returned \(result)")
 		}
@@ -187,7 +187,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	/// should always implement this callback and respond by ending the playback
 	/// session.
 	func handleDVD(error errorCode: DVDErrorCode) {
-		NSLog("fatal error %d", errorCode);
+		NSLog("fatal error %d", errorCode)
 		NSApp.terminate(self)
 	}
 	
@@ -232,9 +232,9 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		}
 		
 		if result == noErr {
-			NSLog("Step 5: Open Media");
-			NSLog("Media Folder: %@", inURL as NSURL);
-			mediaIsOpen = true;
+			NSLog("Step 5: Open Media")
+			NSLog("Media Folder: %@", inURL as NSURL)
+			mediaIsOpen = true
 			logMediaInfo()
 		}
 		
@@ -271,13 +271,13 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	func beginSession() {
 		/* start a new playback session */
 		
-		NSLog("Step 1: Begin Session");
+		NSLog("Step 1: Begin Session")
 		let aRefCon = Unmanaged<DVDAppDelegate>.passUnretained(self).toOpaque()
 		DVDSetFatalErrorCallBack(myDVDErrorHandler, aRefCon)
 		var result = DVDInitialize()
 		if (result != noErr) {
 			/* we can't do anything useful now, so we handle the error and exit */
-			NSLog("DVDInitialize returned %d", result);
+			NSLog("DVDInitialize returned %d", result)
 			if Int(result) == kDVDErrorInitializingLib {
 				/* notify user that another client is using the framework */
 				displayAlert(message: "frameworkBusy", info: "frameworkBusyInfo")
@@ -297,7 +297,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 			.title,
 			.titleTime,
 			.videoStandard,
-			];
+			]
 		
 		result = withUnsafeMutablePointer(to: &eventCallbackID) { (body) -> OSStatus in
 			// hacky hacky hacky!
@@ -319,7 +319,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		milliseconds. This makes it more likely that the playback time advances at
 		least one second on each update. */
 		
-		result = DVDSetTimeEventRate (1000);
+		result = DVDSetTimeEventRate(1000)
 		if result != noErr {
 			print("DVDSetTimeEventRate returned \(result)")
 		}
@@ -332,13 +332,13 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		/* mEventCallBackID is non-zero only if a session is active */
 		if let eventCallbackID = eventCallbackID {
 			closeMedia()
-			NSLog("Step 8: End Session");
+			NSLog("Step 8: End Session")
 			DVDUnregisterEventCallBack(eventCallbackID)
 			let result = DVDDispose()
 			if result != noErr {
 				print("DVDDispose returned \(result)")
 			}
-			self.eventCallbackID = nil;
+			self.eventCallbackID = nil
 		}
 	}
 	
@@ -358,7 +358,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 			return did.bindMemory(to: UInt8.self).baseAddress!
 		})
 		NSLog("Media ID: %.2x%.2x%.2x%.2x%.2x%.2x%.2x%.2x",
-		      discID.0, discID.1, discID.2, discID.3, discID.4, discID.5, discID.6, discID.7);
+		      discID.0, discID.1, discID.2, discID.3, discID.4, discID.5, discID.6, discID.7)
 		
 		/* retrieve and display region code information */
 		var discRegions: DVDRegionCode = UInt32(kDVDRegionCodeUninitialized)
@@ -366,15 +366,15 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		var numChangesLeft: Int16 = -1
 		DVDGetDiscRegionCode(&discRegions)
 		DVDGetDriveRegionCode(&driveRegion, &numChangesLeft)
-		NSLog("Disc Regions: 0x%x", discRegions);
-		NSLog("Drive Region: 0x%x", driveRegion);
-		NSLog("Changes Left: %d", numChangesLeft);
+		NSLog("Disc Regions: 0x%x", discRegions)
+		NSLog("Drive Region: 0x%x", driveRegion)
+		NSLog("Changes Left: %d", numChangesLeft)
 		
 		/* DVD Playback Services checks for a region match whenever you open
 		media, so this code is redundant. The code is included here to show how
 		it's done. */
 		if (~driveRegion & ~discRegions) != ~driveRegion {
-			NSLog("Warning: region code mismatch");
+			NSLog("Warning: region code mismatch")
 		}
 	}
 	
@@ -443,7 +443,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 			
 			if foundDVD {
 				/* we just opened a DVD volume */
-				break;
+				break
 			}
 		}
 		
@@ -495,7 +495,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		that's configured to open a single folder. If the user selects a folder and
 		clicks the Open button, we attempt to open the media. */
 		
-		let panel = NSOpenPanel();
+		let panel = NSOpenPanel()
 		panel.canChooseFiles = false
 		panel.canChooseDirectories = true
 		panel.allowsMultipleSelection = false
@@ -518,8 +518,8 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		}
 		
 		if dvdState != .playing {
-			NSLog("Step 6: Play");
-			let result = DVDPlay();
+			NSLog("Step 6: Play")
+			let result = DVDPlay()
 			if result != noErr {
 				print("DVDPlay returned \(result)")
 			}
@@ -578,7 +578,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	/** This method implements the action for the Scan Forward button in the Control window. */
 	@IBAction func onScanForward(_ sender: AnyObject?) {
 		if dvdState == .playing {
-			let result = DVDScan(.rate4x, .forward);
+			let result = DVDScan(.rate4x, .forward)
 			if result != noErr {
 				print("DVDScan returned \(result)")
 			}
@@ -589,7 +589,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	/** This method implements the action for the Scan Backward button in the Control window. */
 	@IBAction func onScanBackward(_ sender: AnyObject?) {
 		if dvdState == .playing {
-			let result = DVDScan(.rate4x, .backward);
+			let result = DVDScan(.rate4x, .backward)
 			if result != noErr {
 				print("DVDScan returned \(result)")
 			}
@@ -632,12 +632,12 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		}
 		
 		if onMenu.boolValue {
-			result = DVDReturnToTitle();
+			result = DVDReturnToTitle()
 			if result != noErr {
 				print("DVDReturnToTitle returned \(result)")
 			}
 		} else {
-			result = DVDGoToMenu(.root);
+			result = DVDGoToMenu(.root)
 			if result != noErr {
 				print("DVDGoToMenu returned \(result)")
 			}
@@ -650,13 +650,13 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		if dvdState == .playing {
 			var numAngles: UInt16 = 0
 			var angle: UInt16 = 0
-			var result = DVDGetNumAngles(&numAngles);
-			result = DVDGetAngle(&angle);
+			var result = DVDGetNumAngles(&numAngles)
+			result = DVDGetAngle(&angle)
 			angle += 1
 			if angle > numAngles {
-				angle = 1;
+				angle = 1
 			}
-			result = DVDSetAngle(angle);
+			result = DVDSetAngle(angle)
 			if result != noErr {
 				print("DVDSetAngle returned \(result)")
 			}
@@ -685,10 +685,10 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		if count != 0 {
 			/* index of next bookmark in array */
 			bookmarks[Next.value].gotoBookmark()
-			Next.value += 1;
+			Next.value += 1
 			if Next.value == count {
 				/* reset to first bookmark */
-				Next.value = 0;
+				Next.value = 0
 			}
 		}
 	}
