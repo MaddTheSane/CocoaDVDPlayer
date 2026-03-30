@@ -241,7 +241,7 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 		if Int(result) == kDVDErrordRegionCodeUninitialized {
 			/* The drive region code has not been initialized. Refer to the
 			readme file for information on handling this situation. */
-			displayAlert(message: "noRegionCode", info: "noRegionCodeInfo")
+			displayAlert(message: NSLocalizedString("noRegionCode", value: "DVD drive has no region code.", comment: "No Region Code"), info: NSLocalizedString("noRegionCodeInfo", value: "Your DVD drive cannot be used to play DVD-Video media because the drive's region code is not set. To set the region code, use the DVD Player application.", comment: "No Region Code Info"))
 			NSApp.terminate(self)
 		}
 		
@@ -254,15 +254,10 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 	text you want to display. */
 	@discardableResult
 	private func displayAlert(message msgKey: String, info infoKey: String) -> NSApplication.ModalResponse {
-		let bundle = Bundle(for: type(of: self))
-		
-		let messageText = bundle.localizedString(forKey: msgKey, value: "No translation", table: "Localizable")
-		let informativeText = bundle.localizedString(forKey: infoKey, value: "No translation", table: "Localizable")
-		
 		let alert = NSAlert()
 		alert.alertStyle = .critical
-		alert.messageText = messageText
-		alert.informativeText = informativeText
+		alert.messageText = msgKey
+		alert.informativeText = infoKey
 		return alert.runModal()
 	}
 	
@@ -280,7 +275,8 @@ class DVDAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 			NSLog("DVDInitialize returned %d", result)
 			if Int(result) == kDVDErrorInitializingLib {
 				/* notify user that another client is using the framework */
-				displayAlert(message: "frameworkBusy", info: "frameworkBusyInfo")
+				displayAlert(message: NSLocalizedString("frameworkBusy", value: "DVD Playback Services is not available.", comment: "Framework Busy"),
+							 info: NSLocalizedString("frameworkBusyInfo", value: "Only one process is allowed to use DVD Playback Services at a time. Please check to see if another DVD-related application is running.", comment: "Framework Busy Info"))
 			}
 			NSApp.terminate(self)
 		}

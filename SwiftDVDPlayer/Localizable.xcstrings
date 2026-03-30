@@ -1,0 +1,50 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "frameworkBusy" : {
+      "comment" : "Framework Busy",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DVD Playback Services is not available."
+          }
+        }
+      }
+    },
+    "frameworkBusyInfo" : {
+      "comment" : "Framework Busy Info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only one process is allowed to use DVD Playback Services at a time. Please check to see if another DVD-related application is running."
+          }
+        }
+      }
+    },
+    "noRegionCode" : {
+      "comment" : "No Region Code",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DVD drive has no region code."
+          }
+        }
+      }
+    },
+    "noRegionCodeInfo" : {
+      "comment" : "No Region Code Info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your DVD drive cannot be used to play DVD-Video media because the drive's region code is not set. To set the region code, use the DVD Player application."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}
