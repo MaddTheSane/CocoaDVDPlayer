@@ -30,8 +30,8 @@ final class Bookmark: Codable {
 		data = Data(count: Int(size))
 		
 		/* get bookmark to current location */
-		result = data.withUnsafeMutableBytes { (ct: UnsafeMutablePointer<UInt8>) -> OSStatus in
-			return DVDGetBookmark(ct, &size)
+		result = data.withUnsafeMutableBytes { umbp in
+			return DVDGetBookmark(umbp.baseAddress, &size)
 		}
 		if result != noErr {
 			NSLog("DVDGetBookmark returned %d", result)
@@ -41,8 +41,8 @@ final class Bookmark: Codable {
 	/// This method uses our bookmark to set the new playback position.
 	func gotoBookmark() {
 		let dataSize = UInt32(data.count)
-		let result = data.withUnsafeMutableBytes { (ct: UnsafeMutablePointer<UInt8>) -> OSStatus in
-			return DVDGotoBookmark(ct, dataSize)
+		let result = data.withUnsafeMutableBytes { umbp in
+			return DVDGotoBookmark(umbp.baseAddress!, dataSize)
 		}
 		if result != noErr {
 			NSLog("DVDGotoBookmark returned %d", result)

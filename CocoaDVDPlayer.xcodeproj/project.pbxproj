@@ -433,7 +433,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.maddthesane.SwiftDVDPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -468,7 +468,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.maddthesane.SwiftDVDPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

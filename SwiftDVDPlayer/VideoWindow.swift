@@ -100,6 +100,8 @@ class VideoWindow: NSWindow {
 			
 		case .ratio16x9, .ratioLetterBox:
 			ratio = Ratios.wide
+		@unknown default:
+			ratio = Ratios.standard
 		}
 		
 		return ratio
