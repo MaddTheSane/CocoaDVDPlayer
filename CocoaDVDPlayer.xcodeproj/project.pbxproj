@@ -18,6 +18,7 @@
 		554F90E01D590FE20073E764 /* PlaybackTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554F90DF1D590FE20073E764 /* PlaybackTime.swift */; };
 		55F6A24D2F7A4FDF00ED67E4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 55F6A24C2F7A4FDF00ED67E4 /* Localizable.xcstrings */; };
 		55F6A2502F7A52B000ED67E4 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 55F6A24F2F7A52B000ED67E4 /* InfoPlist.xcstrings */; };
+		55F6A2572F7A5E9A00ED67E4 /* MyDVDErrorWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F6A2562F7A5E9A00ED67E4 /* MyDVDErrorWrapper.m */; };
 		84553D24152E118C006B3CFF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84553D23152E118C006B3CFF /* Cocoa.framework */; };
 		84553D30152E118C006B3CFF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84553D2F152E118C006B3CFF /* main.m */; };
 		84553D3A152E118C006B3CFF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84553D38152E118C006B3CFF /* MainMenu.xib */; };
@@ -58,6 +59,9 @@
 		55F6A24C2F7A4FDF00ED67E4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		55F6A24E2F7A4FDF00ED67E4 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/MainMenu.xcstrings; sourceTree = "<group>"; };
 		55F6A24F2F7A52B000ED67E4 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		55F6A2532F7A5E5200ED67E4 /* MyDVDErrorWrapper.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; path = MyDVDErrorWrapper.h; sourceTree = "<group>"; };
+		55F6A2552F7A5E9A00ED67E4 /* SwiftDVDPlayer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftDVDPlayer-Bridging-Header.h"; sourceTree = "<group>"; };
+		55F6A2562F7A5E9A00ED67E4 /* MyDVDErrorWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDVDErrorWrapper.m; sourceTree = "<group>"; };
 		84553D1F152E118C006B3CFF /* CocoaDVDPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoaDVDPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84553D23152E118C006B3CFF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		84553D26152E118C006B3CFF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -121,6 +125,8 @@
 		554F90B81D58F0BA0073E764 /* SwiftDVDPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				55F6A2532F7A5E5200ED67E4 /* MyDVDErrorWrapper.h */,
+				55F6A2562F7A5E9A00ED67E4 /* MyDVDErrorWrapper.m */,
 				554F90C61D58F14C0073E764 /* Bookmark.swift */,
 				554F90C81D58F4E20073E764 /* Controller.swift */,
 				554F90CC1D5900C60073E764 /* ControlWindow.swift */,
@@ -131,6 +137,7 @@
 				554F90C01D58F0BB0073E764 /* Info.plist */,
 				55F6A24C2F7A4FDF00ED67E4 /* Localizable.xcstrings */,
 				55F6A24F2F7A52B000ED67E4 /* InfoPlist.xcstrings */,
+				55F6A2552F7A5E9A00ED67E4 /* SwiftDVDPlayer-Bridging-Header.h */,
 			);
 			path = SwiftDVDPlayer;
 			sourceTree = "<group>";
@@ -276,7 +283,7 @@
 				TargetAttributes = {
 					554F90B61D58F0BA0073E764 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 2640;
 					};
 				};
 			};
@@ -346,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				554F90CB1D58FE940073E764 /* VideoWindow.swift in Sources */,
+				55F6A2572F7A5E9A00ED67E4 /* MyDVDErrorWrapper.m in Sources */,
 				554F90C91D58F4E20073E764 /* Controller.swift in Sources */,
 				554F90C71D58F14C0073E764 /* Bookmark.swift in Sources */,
 				554F90E01D590FE20073E764 /* PlaybackTime.swift in Sources */,
@@ -409,6 +417,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -433,6 +442,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.maddthesane.SwiftDVDPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftDVDPlayer/SwiftDVDPlayer-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -441,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -468,6 +480,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.maddthesane.SwiftDVDPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftDVDPlayer/SwiftDVDPlayer-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
